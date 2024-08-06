@@ -1,35 +1,29 @@
 {
-  "name": "dropdown-menu",
+  "name": "Battleship",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "dev": "jest --watch",
     "build": "webpack --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MetalSnow/Dropdown-menu-image-carousel.git"
   },
   "author": "Metal",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MetalSnow/Dropdown-menu-image-carousel/issues"
-  },
-  "homepage": "https://github.com/MetalSnow/Dropdown-menu-image-carousel#readme",
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
     "@eslint/js": "^9.4.0",
+    "babel-jest": "^29.7.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.4.0",
     "file-loader": "^6.2.0",
     "globals": "^15.4.0",
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.6.0",
+    "jest": "^29.7.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
-    "@metalsnow/dropdown-toggle-package": "^1.0.0"
   }
 }
