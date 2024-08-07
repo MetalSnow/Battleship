@@ -2,7 +2,7 @@ export default class Ship {
   constructor(length) {
     this.length = length;
     this.hitsReceived = 0;
-    this.shipStatus = 'Floating';
+    this.sunk = false;
   }
 
   getLength() {
@@ -11,11 +11,12 @@ export default class Ship {
 
   hit() {
     this.hitsReceived += 1;
+    this.isSunk();
   }
 
   isSunk() {
     if (this.length === this.hitsReceived) {
-      this.shipStatus = 'Sunk';
+      this.sunk = true;
     }
   }
 }

@@ -13,6 +13,7 @@ describe('Ship', () => {
     expect(typeof ship.isSunk).toBe('function');
     ship.hit();
     ship.isSunk();
-    expect(ship.shipStatus).toBe('Sunk');
+
+    expect(ship.sunk).toBe(true);
   });
 });
