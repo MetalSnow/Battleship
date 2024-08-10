@@ -5,8 +5,11 @@ export default class Ship {
     this.sunk = false;
   }
 
-  getLength() {
-    return this.length;
+  getHitsReceived() {
+    return this.hitsReceived;
+  }
+  getSunkStatus() {
+    return this.sunk;
   }
 
   hit() {
