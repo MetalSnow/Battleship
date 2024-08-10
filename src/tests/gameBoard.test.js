@@ -1,5 +1,4 @@
 import Gameboard from '../modules/gameBoard';
-import Ship from '../modules/ship';
 
 describe('Game Board', () => {
   const game = new Gameboard();
@@ -9,37 +8,42 @@ describe('Game Board', () => {
     expect(game.board.length).toEqual(10);
   });
 
-  const ship = new Ship(3);
-  const ship2 = new Ship(2);
-
   test('place ships', () => {
-    game.placeShips(ship, [2, 3], 'horizontal');
+    //test board bounds
 
-    expect(game.board[2][3]).toEqual(ship);
-    expect(game.board[2][4]).toEqual(ship);
-    expect(game.board[2][5]).toEqual(ship);
+    expect(() => game.placeShips(4, [3, 7], 'horizontal')).toThrow();
 
-    game.placeShips(ship2, [7, 4], 'vertical');
+    // check for ships place and neighbors
+    game.placeShips(1, [3, 4], 'horizontal');
 
-    expect(game.board[7][4]).toEqual(ship2);
-    expect(game.board[8][4]).toEqual(ship2);
+    expect(typeof game.board[3][4]).toEqual('object');
+    expect(game.board[3][5]).toBeNull();
+    expect(game.board[3][3]).toBeNull();
+    expect(game.board[2][4]).toBeNull();
+
+    game.placeShips(4, [6, 4], 'vertical');
+    expect(typeof game.board[8][4]).toEqual('object');
   });
 
   test('receive attack', () => {
+    // miss attack
     game.receiveAttack([2, 3]);
-    game.receiveAttack([2, 4]);
-    game.receiveAttack([2, 5]);
 
-    expect(ship.hitsReceived).toBe(3);
-    expect(ship.sunk).toBe(true);
+    expect(game.board[2][3]).toBe(0);
 
-    expect(game.board[2][3]).toBe(1);
-    expect(game.board[2][4]).toBe(1);
-    expect(game.board[2][5]).toBe(1);
+    // hit attack
+    game.receiveAttack([6, 4]);
+    expect(game.board[6][4]).toBe(1);
 
-    // check for missed attacks
-    game.receiveAttack([4, 6]);
+    // ship hits received
+    expect(game.ships[1].hitsReceived).toBe(1);
 
-    expect(game.board[4][6]).toBe(0);
+    // ship sunk
+    game.receiveAttack([7, 4]);
+    game.receiveAttack([8, 4]);
+    game.receiveAttack([9, 4]);
+
+    expect(game.ships[1].getHitsReceived()).toBe(4);
+    expect(game.ships[1].getSunkStatus()).toBe(true);
   });
 });

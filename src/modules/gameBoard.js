@@ -1,3 +1,5 @@
+import Ship from './ship';
+
 export default class Gameboard {
   constructor() {
     this.board = [];
@@ -17,31 +19,53 @@ export default class Gameboard {
     return this.board;
   }
 
-  placeShips(ship, coord, orientation) {
+  placeShips(length, coord, orientation) {
+    const ship = new Ship(length);
     const [x, y] = coord;
 
-    if (orientation === 'horizontal' && x + ship.length > this.board.length) {
-      throw new Error('Ship goes out of bounds horizontally.');
-    }
-    if (orientation === 'vertical' && y + ship.length > this.board[0].length) {
+    if (this.board[x][y] !== '' || this.board[x][y] === null)
+      return 'Place is already full';
+
+    if (orientation === 'vertical' && x + length > this.board.length) {
       throw new Error('Ship goes out of bounds vertically.');
     }
+    if (orientation === 'horizontal' && y + length > this.board[0].length) {
+      throw new Error('Ship goes out of bounds horizontally.');
+    }
 
-    // Store ships in ship array
+    // Store ship in ships array
     this.ships.push(ship);
 
-    for (let i = 0; i < ship.length; i++) {
+    // get neighbors of ship
+    const horizontalNeighbors = this.getNeighbors(length).horizontal;
+
+    const verticalNeighbors = this.getNeighbors(length).vertical;
+
+    for (let i = 0; i < length; i++) {
       if (orientation === 'horizontal') {
-        if (this.board[x][y + i] === '') {
-          this.board[x][y + i] = ship;
-        } else {
-          return 'Place is already full';
+        this.board[x][y + i] = ship;
+
+        for (let [dx, dy] of horizontalNeighbors) {
+          const nx = x + dx;
+          const ny = y + dy;
+
+          if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
+            if (this.board[nx][ny] !== ship) {
+              this.board[nx][ny] = null;
+            }
+          }
         }
       } else {
-        if (this.board[x + i][y] === '') {
-          this.board[x + i][y] = ship;
-        } else {
-          return 'Place is already full';
+        this.board[x + i][y] = ship;
+        for (let [dx, dy] of verticalNeighbors) {
+          const nx = x + dx;
+          const ny = y + dy;
+
+          if (nx >= 0 && nx < 10 && ny >= 0 && ny < 10) {
+            if (this.board[nx][ny] !== ship) {
+              this.board[nx][ny] = null;
+            }
+          }
         }
       }
     }
@@ -50,11 +74,11 @@ export default class Gameboard {
   receiveAttack(coord) {
     const [x, y] = coord;
 
-    if (this.board[x][y] !== '') {
+    if (this.board[x][y] === '' || this.board[x][y] === null) {
+      this.board[x][y] = 0;
+    } else {
       this.board[x][y].hit();
       this.board[x][y] = 1;
-    } else {
-      this.board[x][y] = 0;
     }
 
     if (this.reportSunkships()) {
@@ -64,5 +88,43 @@ export default class Gameboard {
 
   reportSunkships() {
     return this.ships.every((ship) => ship.sunk === true);
+  }
+
+  getNeighbors(length) {
+    const neighbors = {
+      horizontal: [
+        [0, -1],
+        [0, length],
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [-1, length - 2],
+        [-1, length - 1],
+        [-1, length],
+        [1, -1],
+        [1, 0],
+        [1, 1],
+        [1, length - 2],
+        [1, length - 1],
+        [1, length],
+      ],
+      vertical: [
+        [-1, 0],
+        [length, 0],
+        [-1, -1],
+        [0, -1],
+        [1, -1],
+        [length - 2, -1],
+        [length - 1, -1],
+        [length, -1],
+        [-1, 1],
+        [0, 1],
+        [1, 1],
+        [length - 2, 1],
+        [length - 1, 1],
+        [length, 1],
+      ],
+    };
+    return neighbors;
   }
 }
