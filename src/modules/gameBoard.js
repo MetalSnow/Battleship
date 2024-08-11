@@ -19,18 +19,54 @@ export default class Gameboard {
     return this.board;
   }
 
-  placeShips(length, coord, orientation) {
-    const ship = new Ship(length);
-    const [x, y] = coord;
+  getShips() {
+    return this.ships;
+  }
 
-    if (this.board[x][y] !== '' || this.board[x][y] === null)
-      return 'Place is already full';
+  getRandomOrientation() {
+    const orientation = ['vertical', 'horizontal'];
 
-    if (orientation === 'vertical' && x + length > this.board.length) {
-      throw new Error('Ship goes out of bounds vertically.');
+    return orientation[Math.floor(Math.random() * 2)];
+  }
+
+  getRandomPlaceCoord(length, orientation) {
+    const horizontalBounds = [
+      [9, 9],
+      [9, 8],
+      [9, 7],
+      [9, 6],
+    ];
+    const verticalBounds = [
+      [9, 9],
+      [8, 9],
+      [7, 9],
+      [6, 9],
+    ];
+
+    let x;
+    let y;
+
+    if (orientation === 'horizontal') {
+      let bounds = horizontalBounds[length - 1];
+      x = Math.floor(Math.random() * bounds[0]);
+      y = Math.floor(Math.random() * bounds[1]);
+    } else {
+      let bounds = verticalBounds[length - 1];
+      x = Math.floor(Math.random() * bounds[0]);
+      y = Math.floor(Math.random() * bounds[1]);
     }
-    if (orientation === 'horizontal' && y + length > this.board[0].length) {
-      throw new Error('Ship goes out of bounds horizontally.');
+
+    return [x, y];
+  }
+
+  placeShips(length) {
+    const ship = new Ship(length);
+    const orientation = this.getRandomOrientation();
+    const [x, y] = this.getRandomPlaceCoord(length, orientation);
+
+    if (this.board[x][y] !== '' || this.board[x][y] === null) {
+      this.placeShips(length);
+      return;
     }
 
     // Store ship in ships array
