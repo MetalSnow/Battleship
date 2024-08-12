@@ -1,6 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+:root {
+  --sea: #b0d8f5;
+  --brown: #2e0606;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Exo 2', Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Section */
+header {
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--sea);
+  z-index: 1;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  display: flex;
+  font-style: italic;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+.logo img {
+  width: 45px;
+}
+
+.credits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.credits a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.credits a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.credits a:hover {
+  color: red;
+}
+
+.credits img {
+  width: 15px;
+}
+
+/* Main Section */
+main {
+  background-color: rgb(247, 247, 232);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 100px;
+}
+
+.home-page {
+  width: 50%;
+  color: var(--brown);
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  padding: 60px;
+}
+
+.home-page a {
+  color: rgb(97, 97, 97);
+  font-size: 15px;
+}
+
+#start-game {
+  width: 320px;
+  padding: 16px 70px;
+  font-size: 26px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  background-color: var(--brown);
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+#start-game:hover {
+  background-color: #430303dc;
+}
+
+#start-game span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+#start-game span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+#start-game:hover span {
+  padding-right: 25px;
+}
+
+#start-game:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.game-container {
+  width: 80%;
+  display: none;
+  align-items: start;
+  margin-top: 40px;
+  gap: 4rem;
+}
+
+.computer,
+.player {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-board,
+.computer-board {
+  background: url(./icons/sea.jpg);
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  border: #2e0606;
+}
+
+.game-container button {
+  height: 40px;
+  border: 0.1em solid darkslategray;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.game-container button:hover {
+  /* border-color: lightgreen; */
+  box-shadow: 0 0 1px 2px orange;
+  border-color: orange;
+  background-color: #ffa6004f;
+}
+
+/* Footer Section */
+footer {
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: black;
+}
+
+a {
+  font-size: 12px;
+  color: #c5c3c3;
+}
+
+a:hover {
+  color: rgb(194, 220, 236);
+  /* color: rgb(64, 64, 64); */
 }
