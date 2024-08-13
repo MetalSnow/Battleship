@@ -1,3 +1,4 @@
+import bfsFindValidPosition from './helperBFS';
 import Random from './random';
 import Ship from './ship';
 
@@ -28,11 +29,11 @@ export default class Gameboard {
   isAreaFree(x, y, length, orientation) {
     for (let i = 0; i < length; i++) {
       if (orientation === 'horizontal') {
-        if (this.board[x][y + i] !== '') {
+        if (y + i >= 10 || this.board[x][y + i] !== '') {
           return false;
         }
       } else {
-        if (this.board[x + i][y] !== '') {
+        if (x + i >= 10 || this.board[x + i][y] !== '') {
           return false;
         }
       }
@@ -43,18 +44,29 @@ export default class Gameboard {
   placeShip(length) {
     const ship = new Ship(length);
     let placed = false;
-    const maxAttempts = 500;
-    let attempts = 0;
-
     // get neighbors of ship
     const horizontalNeighbors = this.getNeighbors(length).horizontal;
     const verticalNeighbors = this.getNeighbors(length).vertical;
 
-    while (!placed && attempts < maxAttempts) {
+    while (!placed) {
       let orientation = this.random.getRandomOrientation();
-      let [x, y] = this.random.getRandomPlaceCoord(length, orientation);
+      let [startX, startY] = this.random.getRandomPlaceCoord(
+        length,
+        orientation
+      ); // Start BFS from a random position
 
-      if (this.isAreaFree(x, y, length, orientation)) {
+      const validPosition = bfsFindValidPosition(
+        startX,
+        startY,
+        length,
+        orientation,
+        this.isAreaFree.bind(this)
+      );
+
+      if (validPosition) {
+        const [x, y] = validPosition;
+
+        // Place the ship at the valid position found by BFS
         for (let i = 0; i < length; i++) {
           if (orientation === 'horizontal') {
             this.board[x][y + i] = ship;
@@ -87,7 +99,6 @@ export default class Gameboard {
         // Store ship in ships array
         this.ships.push(ship);
       }
-      attempts++;
     }
 
     if (!placed) {
