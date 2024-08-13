@@ -54,6 +54,11 @@ header {
   color: black;
 }
 
+.credits a:hover .github-logo {
+  filter: invert(18%) sepia(100%) saturate(7463%) hue-rotate(-15deg)
+    brightness(104%) contrast(109%);
+}
+
 .credits a:hover {
   color: red;
 }
@@ -83,6 +88,11 @@ main {
 .home-page a {
   color: rgb(97, 97, 97);
   font-size: 15px;
+}
+
+a:hover .expand-icon {
+  filter: invert(48%) sepia(83%) saturate(548%) hue-rotate(164deg)
+    brightness(97%) contrast(101%);
 }
 
 #start-game {
@@ -183,6 +193,5 @@ a {
 }
 
 a:hover {
-  color: rgb(194, 220, 236);
-  /* color: rgb(64, 64, 64); */
+  color: #2fafff;
 }
