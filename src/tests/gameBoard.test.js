@@ -12,7 +12,7 @@ describe('Game Board', () => {
 
   test('Place ships', () => {
     const shipLength = 1;
-    game.placeShips(shipLength);
+    game.placeShip(shipLength);
 
     let shipCells = getCoord(game.getBoard()).shipCells;
 
