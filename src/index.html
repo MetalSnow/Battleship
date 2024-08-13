@@ -15,7 +15,7 @@
         Developed by MetalSnow |
         <a href="https://github.com/MetalSnow" target="_blank"
           >GitHub
-          <img src="./icons/github.png" alt="github-logo" />
+          <img src="./icons/github.svg" alt="github-logo" class="github-logo" />
         </a>
       </div>
     </header>
@@ -30,7 +30,11 @@
           <a
             href="https://en.wikipedia.org/wiki/Battleship_(game)"
             target="_blank"
-            >[Read More🔗]</a
+            >[Read More<img
+              src="./icons/expand.svg"
+              alt="expand"
+              class="expand-icon"
+            />]</a
           >
         </p>
         <button id="start-game"><span>Start Game</span></button>
@@ -39,10 +43,18 @@
         <div class="player">
           <h2>Your Grid</h2>
           <div class="player-board"></div>
+          <div class="player-btns"></div>
+          <button id="random">
+            Randomize <img src="./icons/shuffle.svg" alt="shuffle" />
+          </button>
+          <button id="restart">
+            Restart <img src="./icons/restart.svg" alt="restart" />
+          </button>
         </div>
         <div class="computer">
           <h2>Computer's Grid</h2>
           <div class="computer-board"></div>
+          <button id="play-game">Play</button>
         </div>
       </div>
     </main>
@@ -51,6 +63,18 @@
         href="https://www.flaticon.com/free-icons/battleship"
         title="battleship icons"
         >Battleship icons created by Freepik - Flaticon</a
+      >
+
+      <a
+        href="https://www.lightningdesignsystem.com/?ref=svgrepo.com"
+        target="_blank"
+        >Expand icon by Salesforce</a
+      >
+      <a
+        href="https://www.bypeople.com/minimal-free-pixel-perfect-icons/?ref=svgrepo.com"
+        target="_blank"
+      >
+        GitHub icon by Bypeople</a
       >
     </footer>
   </body>
