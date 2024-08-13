@@ -1,5 +1,4 @@
 export { changeDisplay, startBtn };
-
 const startBtn = document.querySelector('#start-game');
 const homeDiv = document.querySelector('.home-page');
 const gameContainer = document.querySelector('.game-container');
@@ -15,6 +14,7 @@ function createGameBoard(div) {
   for (let i = 0; i < 100; i++) {
     const cell = document.createElement('button');
     cell.className = 'cell';
+    cell.dataset.cell = i;
     div.appendChild(cell);
   }
 }
