@@ -17,10 +17,11 @@ describe('players', () => {
     expect(typeof human.sendAttack).toBe('function');
 
     // place ship
-    computer.gameBoard.placeShips(2);
+    computer.gameBoard.placeShip(2);
 
     // attack missed
     human.sendAttack(computer.gameBoard, [1, 3]);
+    expect(human.getIsTurn()).toBeFalsy();
 
     expect(computerBoard[1][3]).toBe(0);
 
@@ -28,16 +29,15 @@ describe('players', () => {
     const [x, y] = getCoord(computerBoard).coord;
 
     human.sendAttack(computer.gameBoard, [x, y]);
+    expect(human.getIsTurn()).toBeTruthy();
 
     expect(computerBoard[x][y]).toBe(1);
-
-    expect(human.getIsTurn()).toBeFalsy();
   });
 
   test('(CPU Turn)sending attack', () => {
     expect(typeof computer.sendAttack).toBe('function');
     // place ship
-    human.gameBoard.placeShips(1);
+    human.gameBoard.placeShip(1);
 
     // attack hit
     computer.sendAttack(human.gameBoard);

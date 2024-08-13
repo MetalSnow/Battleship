@@ -2,13 +2,13 @@ import Player from './players';
 
 export default class computerPlayer extends Player {
   sendAttack(board) {
-    const coord = this.getRandomCoord();
+    const coord = this.getComputerChoice();
 
     board.receiveAttack(coord);
     this.switchTurn();
   }
 
-  getRandomCoord() {
+  getComputerChoice() {
     const coord = [];
 
     for (let i = 0; i < 2; i++) {

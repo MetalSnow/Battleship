@@ -18,6 +18,6 @@ export default class Player {
   }
 
   switchTurn() {
-    this.isturn = false;
+    this.isturn = this.isturn === true ? false : true;
   }
 }
