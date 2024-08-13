@@ -27,13 +27,14 @@ header {
 .logo {
   display: flex;
   font-style: italic;
+  color: var(--brown);
   justify-content: center;
   align-items: center;
   gap: 7px;
 }
 
 .logo img {
-  width: 45px;
+  width: 42px;
 }
 
 .credits {
@@ -159,7 +160,8 @@ a:hover .expand-icon {
   background: url(./icons/sea.jpg);
   display: grid;
   grid-template-columns: repeat(10, 40px);
-  border: #2e0606;
+  border: 2px solid #2e0606;
+  border-radius: 2px;
 }
 
 .game-container button {
