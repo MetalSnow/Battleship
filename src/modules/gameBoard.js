@@ -122,10 +122,6 @@ export default class Gameboard {
       this.board[x][y].hit();
       this.board[x][y] = 1;
     }
-
-    if (this.reportSunkships()) {
-      return 'Game Finished';
-    }
   }
 
   reportSunkships() {
