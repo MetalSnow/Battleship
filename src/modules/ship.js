@@ -2,6 +2,7 @@ export default class Ship {
   constructor(length) {
     this.length = length;
     this.hitsReceived = 0;
+    this.orientation = '';
     this.sunk = false;
   }
 

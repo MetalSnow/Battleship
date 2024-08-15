@@ -70,6 +70,7 @@ export default class Gameboard {
         for (let i = 0; i < length; i++) {
           if (orientation === 'horizontal') {
             this.board[x][y + i] = ship;
+            ship.orientation = orientation;
 
             for (let [dx, dy] of horizontalNeighbors) {
               const nx = x + dx;
@@ -83,6 +84,8 @@ export default class Gameboard {
             }
           } else {
             this.board[x + i][y] = ship;
+            ship.orientation = orientation;
+
             for (let [dx, dy] of verticalNeighbors) {
               const nx = x + dx;
               const ny = y + dy;
