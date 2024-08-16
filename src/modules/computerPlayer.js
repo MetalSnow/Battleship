@@ -1,11 +1,15 @@
+import { bfsFindValidCpuChoice } from './helperBFS';
 import Player from './players';
 
 export default class computerPlayer extends Player {
-  sendAttack(board) {
-    const coord = this.getComputerChoice();
+  sendAttack(gameBoard) {
+    const [x, y] = this.getComputerChoice();
 
-    board.receiveAttack(coord);
-    this.switchTurn();
+    const validChoice = bfsFindValidCpuChoice(x, y, gameBoard.board);
+    const ship = gameBoard.board[validChoice[0]][validChoice[1]];
+
+    gameBoard.receiveAttack(validChoice);
+    return { validChoice, ship };
   }
 
   getComputerChoice() {

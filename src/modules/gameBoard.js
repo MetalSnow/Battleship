@@ -1,4 +1,4 @@
-import bfsFindValidPosition from './helperBFS';
+import { bfsFindValidPosition } from './helperBFS';
 import Random from './random';
 import Ship from './ship';
 

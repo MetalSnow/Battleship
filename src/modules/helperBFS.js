@@ -1,10 +1,6 @@
-export default function bfsFindValidPosition(
-  startX,
-  startY,
-  length,
-  orientation,
-  isAreaFree
-) {
+export { bfsFindValidPosition, bfsFindValidCpuChoice };
+
+function bfsFindValidPosition(startX, startY, length, orientation, isAreaFree) {
   const directions = [
     [0, 1], // right
     [0, -1], // left
@@ -44,4 +40,43 @@ export default function bfsFindValidPosition(
 
   // If no valid position is found, return null
   return null;
+}
+
+function bfsFindValidCpuChoice(startX, startY, board) {
+  const directions = [
+    [0, 1], // right
+    [0, -1], // left
+    [1, 0], // down
+    [-1, 0], // up
+  ];
+
+  const queue = [[startX, startY]];
+  const visited = new Set();
+  visited.add(`${startX},${startY}`);
+
+  while (queue.length) {
+    const [x, y] = queue.shift();
+
+    if (board[x][y] !== 0 && board[x][y] !== 1 && board[x][y] !== null) {
+      return [x, y];
+    }
+
+    for (const [dx, dy] of directions) {
+      const nx = x + dx;
+      const ny = y + dy;
+
+      if (
+        nx >= 0 &&
+        nx < 10 &&
+        ny >= 0 &&
+        ny < 10 &&
+        !visited.has(`${nx},${ny}`)
+      ) {
+        queue.push([nx, ny]);
+        visited.add(`${nx},${ny}`);
+      } else {
+        console.log('cant find valid position');
+      }
+    }
+  }
 }
