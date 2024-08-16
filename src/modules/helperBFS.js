@@ -57,7 +57,7 @@ function bfsFindValidCpuChoice(startX, startY, board) {
   while (queue.length) {
     const [x, y] = queue.shift();
 
-    if (board[x][y] !== 0 && board[x][y] !== 1 && board[x][y] !== null) {
+    if (board[x][y] !== 0 && board[x][y] !== 1) {
       return [x, y];
     }
 

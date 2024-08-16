@@ -26,7 +26,6 @@ export default class Player {
     board.generateBoard();
 
     board.ships = [];
-    board.placeAllShips();
 
     this.gameBoard = board;
   }
