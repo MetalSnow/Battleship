@@ -83,12 +83,15 @@ main {
 }
 
 .home-page {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
   width: 50%;
   color: var(--brown);
   font-size: 26px;
   font-weight: 500;
   font-style: italic;
-  padding: 60px;
+  padding: 5rem 3rem;
 }
 
 .home-page a {
@@ -151,6 +154,22 @@ a:hover .expand-icon {
   gap: 4rem;
 }
 
+.game-container span {
+  color: red;
+}
+
+.game-container h2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-ships-record,
+.cpu-ships-record {
+  color: rgb(79, 79, 79);
+  font-size: 12px;
+  text-align: center;
+}
+
 .computer,
 .player {
   position: relative;
@@ -188,6 +207,7 @@ a:hover .expand-icon {
 #restart {
   background-color: gray;
   color: black;
+  font-weight: 700;
 }
 
 #random:hover,
@@ -241,12 +261,18 @@ a:hover .expand-icon {
   font-size: 17px;
 }
 
-.cpu-btns div {
+.difficulty-options {
   margin-top: 5px;
   display: flex;
   gap: 2px;
   align-items: center;
   justify-content: center;
+}
+
+.difficulty-options input {
+  accent-color: darkslategray;
+  scale: 1.2;
+  cursor: pointer;
 }
 
 label {
@@ -277,6 +303,76 @@ label {
     rgb(246, 248, 160) 100%,
     rgb(222, 217, 195) 0
   );
+}
+
+dialog {
+  padding: 20px;
+  width: 25%;
+  height: 20%;
+  border: none;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+dialog div {
+  display: flex;
+  gap: 20px;
+}
+
+dialog h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0px 1px 1px black;
+}
+
+#play-again,
+#back {
+  padding: 5px 13px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0px 0px 2px 1px black;
+}
+
+#play-again:hover,
+#back:hover {
+  color: white;
+  background-color: rgb(39, 39, 39);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.418);
+}
+
+dialog[open] {
+  animation: fadein 0.6s ease-in forwards;
+}
+
+dialog[close] {
+  animation: fadeout 0.8s ease-out backwards;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeout {
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
 }
 
 /* Footer Section */

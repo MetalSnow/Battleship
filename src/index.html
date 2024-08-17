@@ -42,7 +42,10 @@
       </div>
       <div class="game-container">
         <div class="player">
-          <h2>Your Grid</h2>
+          <h2>
+            Your Grid <br />
+            <p class="player-ships-record">Sunk Ships: <span>0</span></p>
+          </h2>
           <div class="player-board"></div>
           <div class="player-btns">
             <button id="random">
@@ -54,13 +57,16 @@
           </div>
         </div>
         <div class="computer">
-          <h2>Computer's Grid</h2>
+          <h2>
+            Computer's Grid<br />
+            <p class="cpu-ships-record">Sunk Ships: <span>0</span></p>
+          </h2>
           <div class="computer-board"></div>
           <div class="cpu-btns">
             <p>Difficulty:</p>
-            <div>
+            <div class="difficulty-options">
               <input type="checkbox" id="medium" name="medium" checked />
-              <label for="medium">medium</label>
+              <label for="medium">normal</label>
               <input type="checkbox" id="hard" name="hard" />
               <label for="hard">hard</label>
             </div>

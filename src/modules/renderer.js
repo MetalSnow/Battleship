@@ -5,6 +5,11 @@ import missedIcon from '../icons/missed.png';
 import { dialog, highlightSurroundingCells } from './dom';
 
 export default class Renderer {
+  constructor() {
+    this.playerSunkShip = 0;
+    this.cpuSunkShip = 0;
+  }
+
   renderBoard(div, gameBoard, name) {
     for (let i = 0; i < gameBoard.length; i++) {
       for (let j = 0; j < gameBoard[i].length; j++) {
@@ -22,13 +27,15 @@ export default class Renderer {
     cells.forEach((cell) => {
       let [x, y] = [cell.dataset.row, cell.dataset.col];
       if (board[x][y] !== '' && board[x][y] !== null) {
-        cell.style = 'background-color: #2f4f4fdc';
+        cell.style =
+          'background-color: #8c6355bf;border: 0.6mm ridge #5a4037bf;';
       }
     });
   }
 
   renderComputerMove(ship, player, playerBoard, x, y) {
     const playerCells = document.querySelectorAll('.player-cell');
+    const sunkShipsSpan = document.querySelector('.player-ships-record');
 
     playerCells.forEach((cell) => {
       if (+cell.dataset.row === x && +cell.dataset.col === y) {
@@ -45,7 +52,12 @@ export default class Renderer {
           if (playerBoard[x][y] === 1) {
             cell.appendChild(hitImg);
             cell.style.backgroundColor = '#ff000054';
+            cell.style.border = 'none';
             highlightSurroundingCells(x, y, ship, player.gameBoard, 'player');
+            if (ship.getSunkStatus()) {
+              this.cpuSunkShip += 1;
+              sunkShipsSpan.children[0].textContent = this.cpuSunkShip;
+            }
           } else {
             cell.appendChild(missedImg);
             cell.style.backgroundColor = '#ffff0045';
@@ -56,6 +68,8 @@ export default class Renderer {
   }
 
   renderPlayerMove(cell, cpu, cpuBoard, x, y) {
+    const sunkShipsSpan = document.querySelector('.cpu-ships-record');
+
     const hitImg = new Image();
     const missedImg = new Image();
 
@@ -69,6 +83,11 @@ export default class Renderer {
       cell.appendChild(hitImg);
       cell.style.backgroundColor = '#ff000054';
       highlightSurroundingCells(x, y, cpuBoard[x][y], cpu.gameBoard, 'cpu');
+
+      if (cpuBoard[x][y].hitsReceived + 1 === cpuBoard[x][y].length) {
+        this.playerSunkShip += 1;
+        sunkShipsSpan.children[0].textContent = this.playerSunkShip;
+      }
     } else {
       cell.appendChild(missedImg);
       cell.style.backgroundColor = '#ffff0045';
@@ -81,6 +100,7 @@ export default class Renderer {
     const h1 = document.querySelector('.win-lose');
     if (playerType === 'player') {
       h1.textContent = 'You Have Won!';
+      h1.parentElement.style.background = 'lightgreen';
       const winImg = new Image();
       winImg.src = winIcon;
       winImg.style.width = '35px';
@@ -89,12 +109,13 @@ export default class Renderer {
     } else {
       h1.textContent = 'You Have Lost!';
       const loseImg = new Image();
+      h1.parentElement.style.background = 'lightcoral';
       loseImg.src = loseIcon;
       loseImg.style.width = '35px';
 
       h1.appendChild(loseImg);
     }
-
+    dialog.style.display = 'flex';
     dialog.showModal();
   }
 }

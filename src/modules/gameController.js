@@ -25,6 +25,9 @@ export default function gameController() {
 
     setupInitialDisplay();
 
+    render.cpuSunkShip = 0;
+    render.playerSunkShip = 0;
+
     if (cpu.getIsTurn()) {
       cpu.switchTurn();
     }

@@ -22,8 +22,12 @@ const startDiv = document.querySelector('.cpu-btns');
 const dialog = document.querySelector('dialog');
 const dialogBackBtn = document.querySelector('#back');
 const dialogPlayBtn = document.querySelector('#play-again');
+
 const checkBoxM = document.querySelector('#medium');
 const checkBoxH = document.querySelector('#hard');
+
+const playerSunkSpan = document.querySelector('.player-ships-record');
+const cpuSunkSpan = document.querySelector('.cpu-ships-record');
 
 const game = gameController();
 
@@ -38,6 +42,7 @@ checkBoxH.addEventListener('change', () => {
 
 startBtn.addEventListener('click', () => {
   game.startGame();
+  restartBtn.style.pointerEvents = 'none';
 });
 
 restartBtn.addEventListener('click', () => {
@@ -50,6 +55,10 @@ restartBtn.addEventListener('click', () => {
   startDiv.style.opacity = '1';
   playerBoardDiv.style.opacity = '';
   randomizeBtn.style.pointerEvents = '';
+  restartBtn.style.pointerEvents = 'none';
+
+  playerSunkSpan.children[0].textContent = 0;
+  cpuSunkSpan.children[0].textContent = 0;
 });
 
 playBtn.addEventListener('click', () => {
@@ -57,6 +66,7 @@ playBtn.addEventListener('click', () => {
   startDiv.style.opacity = '0';
   startDiv.style.visibility = 'hidden';
   randomizeBtn.style.pointerEvents = 'none';
+  restartBtn.style.pointerEvents = '';
 });
 
 randomizeBtn.addEventListener('click', () => {
@@ -71,6 +81,10 @@ dialogPlayBtn.addEventListener('click', () => {
   game.startGame();
   game.hilightActiveBoard();
   dialog.close();
+  dialog.style.display = '';
+  restartBtn.style.pointerEvents = '';
+  playerSunkSpan.children[0].textContent = 0;
+  cpuSunkSpan.children[0].textContent = 0;
 });
 
 dialogBackBtn.addEventListener('click', () => {
@@ -81,7 +95,10 @@ dialogBackBtn.addEventListener('click', () => {
   dialog.close();
   startDiv.style.visibility = 'visible';
   startDiv.style.opacity = '1';
+  dialog.style.display = '';
   randomizeBtn.style.pointerEvents = '';
+  playerSunkSpan.children[0].textContent = 0;
+  cpuSunkSpan.children[0].textContent = 0;
 });
 
 const setupInitialDisplay = () => {
