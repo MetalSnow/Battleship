@@ -14,6 +14,11 @@ body {
   flex-direction: column;
 }
 
+h2,
+p {
+  margin: 0;
+}
+
 /* Header Section */
 header {
   padding: 0 40px;
@@ -140,19 +145,60 @@ a:hover .expand-icon {
 }
 
 .game-container {
-  width: 80%;
+  padding-top: 60px;
   display: none;
   align-items: start;
-  margin-top: 40px;
   gap: 4rem;
 }
 
 .computer,
 .player {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
+}
+
+.player-btns {
+  display: flex;
+  gap: 2rem;
+}
+
+#random,
+#restart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  max-width: 130px;
+  padding: 3px 8px;
+  font-weight: 600;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.874);
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+#restart {
+  background-color: gray;
+  color: black;
+}
+
+#random:hover,
+#restart:hover {
+  opacity: 0.9;
+}
+
+#random:active,
+#restart:active {
+  background-color: rgba(0, 0, 0, 0.759);
+  transform: translate(2px, 2px);
 }
 
 .player-board,
@@ -168,14 +214,69 @@ a:hover .expand-icon {
   height: 40px;
   border: 0.1em solid darkslategray;
   background-color: transparent;
+}
+
+.game-container .cpu-cell {
   cursor: pointer;
 }
 
 .game-container .cpu-cell:hover {
-  /* border-color: lightgreen; */
   box-shadow: 0 0 1px 2px orange;
   border-color: orange;
   background-color: #ffa6004f;
+}
+
+.cpu-btns {
+  position: absolute;
+  top: 40%;
+  right: 50%;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  transition: visibility 0.5s, opacity 0.6s linear;
+}
+
+.cpu-btns p {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.cpu-btns div {
+  margin-top: 5px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  font-size: 16px;
+}
+
+#playBtn {
+  margin-top: 14px;
+  border: 1px solid #d6d6d6;
+  background: #d5efd6;
+  background: linear-gradient(
+    to bottom,
+    rgb(246, 248, 160) 0,
+    rgb(222, 217, 195) 100%
+  );
+  border-radius: 10px;
+  padding: 0.1em 0.3em;
+  font-size: 1.32em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#playBtn:hover {
+  background: linear-gradient(
+    to top,
+    rgb(246, 248, 160) 100%,
+    rgb(222, 217, 195) 0
+  );
 }
 
 /* Footer Section */

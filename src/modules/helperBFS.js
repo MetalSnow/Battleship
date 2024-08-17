@@ -1,3 +1,4 @@
+import getDificulty from './difficulty';
 export { bfsFindValidPosition, bfsFindValidCpuChoice };
 
 function bfsFindValidPosition(startX, startY, length, orientation, isAreaFree) {
@@ -57,7 +58,7 @@ function bfsFindValidCpuChoice(startX, startY, board) {
   while (queue.length) {
     const [x, y] = queue.shift();
 
-    if (board[x][y] !== 0 && board[x][y] !== 1) {
+    if (getDificulty(board, x, y)) {
       return [x, y];
     }
 
@@ -74,8 +75,6 @@ function bfsFindValidCpuChoice(startX, startY, board) {
       ) {
         queue.push([nx, ny]);
         visited.add(`${nx},${ny}`);
-      } else {
-        console.log('cant find valid position');
       }
     }
   }

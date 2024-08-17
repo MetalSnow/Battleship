@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship</title>
+    <link rel="icon" href="./icons/title-icon.png" />
   </head>
   <body>
     <header>
@@ -43,18 +44,28 @@
         <div class="player">
           <h2>Your Grid</h2>
           <div class="player-board"></div>
-          <div class="player-btns"></div>
-          <button id="random">
-            Randomize <img src="./icons/shuffle.svg" alt="shuffle" />
-          </button>
-          <button id="restart">
-            Restart <img src="./icons/restart.svg" alt="restart" />
-          </button>
+          <div class="player-btns">
+            <button id="random">
+              Randomize <img src="./icons/shuffle.svg" alt="shuffle" />
+            </button>
+            <button id="restart">
+              Restart <img src="./icons/restart.svg" alt="restart" />
+            </button>
+          </div>
         </div>
         <div class="computer">
           <h2>Computer's Grid</h2>
           <div class="computer-board"></div>
-          <button id="play-game">Play</button>
+          <div class="cpu-btns">
+            <p>Difficulty:</p>
+            <div>
+              <input type="checkbox" id="medium" name="medium" checked />
+              <label for="medium">medium</label>
+              <input type="checkbox" id="hard" name="hard" />
+              <label for="hard">hard</label>
+            </div>
+            <button id="playBtn">Play</button>
+          </div>
         </div>
       </div>
       <dialog>
