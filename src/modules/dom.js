@@ -1,20 +1,13 @@
-import { game } from './gameController';
-import hitIcon from '../icons/hit.png';
+import gameController from './gameController';
 import missedIcon from '../icons/missed.png';
-import winIcon from '../icons/win.png';
-import loseIcon from '../icons/lose.png';
 export {
   setupInitialDisplay,
   updateBoardUI,
   startBtn,
-  renderPlayerMove,
-  renderComputerMove,
   playerBoardDiv,
   computerBoardDiv,
-  renderBoard,
-  renderShips,
-  randomizeBtn,
-  renderWinner,
+  highlightSurroundingCells,
+  dialog,
 };
 
 const startBtn = document.querySelector('#start-game');
@@ -23,17 +16,47 @@ const gameContainer = document.querySelector('.game-container');
 const playerBoardDiv = document.querySelector('.player-board');
 const computerBoardDiv = document.querySelector('.computer-board');
 const randomizeBtn = document.querySelector('#random');
-const playBtn = document.querySelector('#play-game');
+const restartBtn = document.querySelector('#restart');
+const playBtn = document.querySelector('#playBtn');
+const startDiv = document.querySelector('.cpu-btns');
 const dialog = document.querySelector('dialog');
 const dialogBackBtn = document.querySelector('#back');
 const dialogPlayBtn = document.querySelector('#play-again');
+const checkBoxM = document.querySelector('#medium');
+const checkBoxH = document.querySelector('#hard');
+
+const game = gameController();
+
+checkBoxM.addEventListener('change', () => {
+  checkBoxM.checked = true;
+  checkBoxH.checked = false;
+});
+checkBoxH.addEventListener('change', () => {
+  checkBoxH.checked = true;
+  checkBoxM.checked = false;
+});
 
 startBtn.addEventListener('click', () => {
   game.startGame();
 });
 
+restartBtn.addEventListener('click', () => {
+  deleteBoardUI(playerBoardDiv);
+  deleteBoardUI(computerBoardDiv);
+  game.resetGame();
+  game.startGame();
+  dialog.close();
+  startDiv.style.visibility = 'visible';
+  startDiv.style.opacity = '1';
+  playerBoardDiv.style.opacity = '';
+  randomizeBtn.style.pointerEvents = '';
+});
+
 playBtn.addEventListener('click', () => {
   game.hilightActiveBoard();
+  startDiv.style.opacity = '0';
+  startDiv.style.visibility = 'hidden';
+  randomizeBtn.style.pointerEvents = 'none';
 });
 
 randomizeBtn.addEventListener('click', () => {
@@ -56,16 +79,14 @@ dialogBackBtn.addEventListener('click', () => {
   game.resetGame();
   game.startGame();
   dialog.close();
+  startDiv.style.visibility = 'visible';
+  startDiv.style.opacity = '1';
+  randomizeBtn.style.pointerEvents = '';
 });
 
-const setupInitialDisplay = (playerBoard, cpuBoard) => {
+const setupInitialDisplay = () => {
   homeDiv.style.display = 'none';
   gameContainer.style.display = 'flex';
-
-  renderBoard(playerBoardDiv, playerBoard, 'player');
-  renderBoard(computerBoardDiv, cpuBoard, 'cpu');
-
-  renderShips('player', playerBoard);
 
   computerBoardDiv.style.opacity = '0.3';
   computerBoardDiv.style.pointerEvents = 'none';
@@ -216,99 +237,4 @@ const deleteBoardUI = (boardDiv) => {
   while (boardDiv.firstChild) {
     boardDiv.removeChild(boardDiv.firstChild);
   }
-};
-
-// rendering functions
-const renderWinner = (playerType) => {
-  const h1 = document.querySelector('.win-lose');
-  if (playerType === 'player') {
-    h1.textContent = 'You Have Won!';
-    const winImg = new Image();
-    winImg.src = winIcon;
-    winImg.style.width = '35px';
-
-    h1.appendChild(winImg);
-  } else {
-    h1.textContent = 'You Have Lost!';
-    const loseImg = new Image();
-    loseImg.src = loseIcon;
-    loseImg.style.width = '35px';
-
-    h1.appendChild(loseImg);
-  }
-
-  dialog.showModal();
-};
-
-const renderComputerMove = (ship, player, playerBoard, x, y) => {
-  const playerCells = document.querySelectorAll('.player-cell');
-
-  playerCells.forEach((cell) => {
-    if (+cell.dataset.row === x && +cell.dataset.col === y) {
-      const hitImg = new Image();
-      const missedImg = new Image();
-
-      hitImg.src = hitIcon;
-      missedImg.src = missedIcon;
-
-      hitImg.style.width = '25px';
-      missedImg.style.width = '25px';
-
-      if (!cell.firstChild) {
-        if (playerBoard[x][y] === 1) {
-          cell.appendChild(hitImg);
-          cell.style.backgroundColor = '#ff000054';
-          highlightSurroundingCells(x, y, ship, player.gameBoard, 'player');
-        } else {
-          cell.appendChild(missedImg);
-          cell.style.backgroundColor = '#ffff0045';
-        }
-      }
-    }
-  });
-};
-
-const renderPlayerMove = (cell, cpu, cpuBoard, x, y) => {
-  const hitImg = new Image();
-  const missedImg = new Image();
-
-  hitImg.src = hitIcon;
-  missedImg.src = missedIcon;
-
-  hitImg.style.width = '25px';
-  missedImg.style.width = '25px';
-
-  if (typeof cpuBoard[x][y] === 'object' && cpuBoard[x][y] !== null) {
-    cell.appendChild(hitImg);
-    cell.style.backgroundColor = '#ff000054';
-    highlightSurroundingCells(x, y, cpuBoard[x][y], cpu.gameBoard, 'cpu');
-  } else {
-    cell.appendChild(missedImg);
-    cell.style.backgroundColor = '#ffff0045';
-  }
-
-  cell.style.pointerEvents = 'none';
-};
-
-const renderBoard = (div, gameBoard, name) => {
-  for (let i = 0; i < gameBoard.length; i++) {
-    for (let j = 0; j < gameBoard[i].length; j++) {
-      const cell = document.createElement('button');
-      cell.classList.add(`${name}-cell`);
-      cell.dataset.row = i;
-      cell.dataset.col = j;
-      div.appendChild(cell);
-    }
-  }
-};
-
-const renderShips = (name, board) => {
-  const cells = document.querySelectorAll(`.${name}-cell`);
-
-  cells.forEach((cell) => {
-    let [x, y] = [cell.dataset.row, cell.dataset.col];
-    if (board[x][y] !== '' && board[x][y] !== null) {
-      cell.style = 'background-color: #2f4f4fdc';
-    }
-  });
 };

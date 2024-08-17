@@ -1,31 +1,29 @@
 import humanPlayer from './humanPlayer';
 import computerPlayer from './computerPlayer';
 import {
-  computerBoardDiv,
   playerBoardDiv,
-  randomizeBtn,
-  renderBoard,
-  renderComputerMove,
-  renderPlayerMove,
-  renderShips,
-  renderWinner,
+  computerBoardDiv,
   setupInitialDisplay,
   updateBoardUI,
 } from './dom';
+import Renderer from './renderer';
 
-export { game };
-
-const game = gameController();
-
-function gameController() {
+export default function gameController() {
   const player = new humanPlayer();
   const cpu = new computerPlayer();
+
+  const render = new Renderer();
 
   const startGame = () => {
     player.gameBoard.placeAllShips();
     cpu.gameBoard.placeAllShips();
 
-    setupInitialDisplay(player.gameBoard.getBoard(), cpu.gameBoard.getBoard());
+    render.renderBoard(playerBoardDiv, player.gameBoard.getBoard(), 'player');
+    render.renderBoard(computerBoardDiv, cpu.gameBoard.getBoard(), 'cpu');
+
+    render.renderShips('player', player.gameBoard.getBoard());
+
+    setupInitialDisplay();
 
     if (cpu.getIsTurn()) {
       cpu.switchTurn();
@@ -39,8 +37,8 @@ function gameController() {
   const randomizePlayerShips = () => {
     player.randomizeShips();
     player.gameBoard.placeAllShips();
-    renderBoard(playerBoardDiv, player.gameBoard.getBoard(), 'player');
-    renderShips('player', player.gameBoard.getBoard());
+    render.renderBoard(playerBoardDiv, player.gameBoard.getBoard(), 'player');
+    render.renderShips('player', player.gameBoard.getBoard());
   };
 
   const hilightActiveBoard = () => {
@@ -57,7 +55,7 @@ function gameController() {
     const cpuBoard = cpu.gameBoard.getBoard();
     const [x, y] = [cell.dataset.row, cell.dataset.col];
 
-    renderPlayerMove(cell, cpu, cpuBoard, x, y);
+    render.renderPlayerMove(cell, cpu, cpuBoard, x, y);
 
     player.sendAttack(cpu.gameBoard, [x, y]);
 
@@ -76,9 +74,7 @@ function gameController() {
         const [x, y] = obj.validChoice;
         const ship = obj.ship;
 
-        renderComputerMove(ship, player, playerBoard, x, y);
-
-        console.log(playerBoard[x][y]);
+        render.renderComputerMove(ship, player, playerBoard, x, y);
 
         if (playerBoard[x][y] === 0) {
           player.switchTurn();
@@ -90,15 +86,15 @@ function gameController() {
         }
 
         hilightActiveBoard();
-      }, 0);
+      }, 1100);
     }
   };
 
   const checkWinner = () => {
     if (player.gameBoard.reportSunkships()) {
-      renderWinner('cpu');
+      render.renderWinner('cpu');
     } else if (cpu.gameBoard.reportSunkships()) {
-      renderWinner('player');
+      render.renderWinner('player');
     }
   };
 
