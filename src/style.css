@@ -236,8 +236,11 @@ a:hover .expand-icon {
   background-color: transparent;
 }
 
-.game-container .cpu-cell {
+.cpu-cell,
+.player-cell {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .game-container .cpu-cell:hover {
