@@ -42,6 +42,7 @@ checkBoxH.addEventListener('change', () => {
 
 startBtn.addEventListener('click', () => {
   game.startGame();
+  startDiv.childNodes.forEach((child) => (child.style.opacity = '1'));
   restartBtn.style.pointerEvents = 'none';
 });
 
@@ -53,6 +54,7 @@ restartBtn.addEventListener('click', () => {
   dialog.close();
   startDiv.style.visibility = 'visible';
   startDiv.style.opacity = '1';
+  startDiv.childNodes.forEach((child) => (child.style.opacity = '1'));
   playerBoardDiv.style.opacity = '';
   randomizeBtn.style.pointerEvents = '';
   restartBtn.style.pointerEvents = 'none';
@@ -63,8 +65,8 @@ restartBtn.addEventListener('click', () => {
 
 playBtn.addEventListener('click', () => {
   game.hilightActiveBoard();
-  startDiv.style.opacity = '0';
   startDiv.style.visibility = 'hidden';
+  startDiv.style.opacity = '0';
   randomizeBtn.style.pointerEvents = 'none';
   restartBtn.style.pointerEvents = '';
 });
@@ -102,8 +104,8 @@ dialogBackBtn.addEventListener('click', () => {
 });
 
 const setupInitialDisplay = () => {
-  homeDiv.style.display = 'none';
-  gameContainer.style.display = 'flex';
+  homeDiv.classList.add('slide-one');
+  gameContainer.classList.add('slide-two');
 
   computerBoardDiv.style.opacity = '0.3';
   computerBoardDiv.style.pointerEvents = 'none';
